@@ -1,6 +1,7 @@
 package com.bridgelabz.ds.linkedlist;
 
 public class MyLinkedList<K> {
+
 	INode<K> head;
 	INode<K> tail;
 
@@ -54,8 +55,8 @@ public class MyLinkedList<K> {
 
 	public int size() {
 		INode<K> temp = head;
-		int size = 1;
-		while (temp.getNext() != null) {
+		int size = 0;
+		while (temp != null) {
 			size++;
 			temp = temp.getNext();
 		}
@@ -82,7 +83,56 @@ public class MyLinkedList<K> {
 
 	@Override
 	public String toString() {
-
 		return head.toString();
+	}
+
+	public void remove(INode<K> node) {
+		INode<K> temp = head;
+		if (head.getKey().equals(node.getKey())) {
+			head = temp.getNext();
+			temp.setNext(null);
+		} else {
+			while (!temp.getNext().getKey()
+					.equals(node.getKey())
+					&& temp.getNext() != null) {
+				temp = temp.getNext();
+			}
+			temp.setNext(temp.getNext().getNext());
+		}
+	}
+
+	public boolean search(INode<K> node) {
+		INode<K> temp = head;
+		while (temp != null) {
+			if (temp.getKey().equals(node.getKey())) {
+				return true;
+			}
+			temp = temp.getNext();
+		}
+		return false;
+	}
+
+	public int index(INode<K> node) {
+		INode<K> temp = head;
+		int index = 0;
+		while (temp != null) {
+			if (temp.getKey().equals(node.getKey())) {
+				return index;
+			}
+			index++;
+			temp = temp.getNext();
+		}
+		return -1;
+	}
+
+	public INode<K> get(int index) {
+		INode<K> temp = head;
+		for (int i = 0; i < size(); i++) {
+			if (i == index) {
+				return temp;
+			}
+			temp = temp.getNext();
+		}
+		return null;
 	}
 }
